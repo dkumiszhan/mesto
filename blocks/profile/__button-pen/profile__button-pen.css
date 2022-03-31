@@ -1,0 +1,12 @@
+.profile__button-pen {
+  background-image: url('../../../images/pen.svg');
+  background-color: #000000;
+  border: 1px solid #ffffff;
+  box-sizing: border-box;
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+  background-position: center;
+  grid-area: pen;
+
+} 
