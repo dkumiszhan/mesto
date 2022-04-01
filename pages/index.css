@@ -12,3 +12,11 @@
 @import url(../blocks/profile/__button-pen/profile__button-pen.css);
 @import url(../blocks/profile/__button-add/profile__button-add.css);
 @import url(../blocks/profile/__container/profile__container.css);
+@import url(../blocks/elements/elements.css);
+@import url(../blocks/elements/__list/elements__list.css);
+@import url(../blocks/elements/__list-item/elements__list-item.css);
+@import url(../blocks/elements/__list-image/elements__list-image.css);
+@import url(../blocks/elements/__flex-container/elements__flex-container.css);
+@import url(../blocks/elements/__list-title/elements__list-title.css);
+@import url(../blocks/elements/__list-button/elements__list-button.css);
+@import url(../blocks/elements/__list-button/_inactive/elements__list-button_inactive.css);
