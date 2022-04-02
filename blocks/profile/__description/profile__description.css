@@ -5,6 +5,10 @@
   line-height: 122%;
   grid-area: description;
   margin: 0;
+  max-width: 336px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 @media (max-width: 1024px) {
