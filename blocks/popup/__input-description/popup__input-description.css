@@ -1,0 +1,13 @@
+.popup__input-description {
+  border: none;
+  outline: none;
+  width: 100%;
+}
+
+.popup__input-description::placeholder {
+  font-size: 14px;
+  line-height: 17px;
+  color: #545454;
+  font-style: normal;
+  font-weight: 400;
+}
