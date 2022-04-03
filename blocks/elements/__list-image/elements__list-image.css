@@ -1,4 +1,5 @@
 .elements__list-image {
   width: 282px;
   height: 282px;
+  object-fit: cover;
 }
