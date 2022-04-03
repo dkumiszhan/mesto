@@ -1,0 +1,15 @@
+.profile__info {
+  color: #ffffff;
+  display: grid;
+  grid-template-areas: 
+  'name pen'
+  'description description';
+  align-items: end;
+  column-gap: 25px;
+}
+
+@media (max-width: 1024px) {
+  .profile__info {
+    column-gap: 10px;
+  }
+}
