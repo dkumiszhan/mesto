@@ -13,7 +13,8 @@
   .popup__close {
     width: 20px;
     height: 20px;
-    top: -20px;
+    top: -36px;
+    left:calc(100% - 20px);
     background-image: url(../../../images/Close-Icon-s.svg);
   }
 }
