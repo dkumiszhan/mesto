@@ -17,3 +17,11 @@
     background-image: url(../../../images/Close-Icon-s.svg);
   }
 }
+
+.popup__close:hover {
+    opacity: 0.8;
+    background-color: rgba(0, 0, 0, 0.8);
+    transition: opacity 0.8s linear;
+    transition: background-color 0.8s linear;
+    cursor: pointer;
+  }
