@@ -7,3 +7,10 @@
   white-space: nowrap;
   overflow: hidden;
 }
+
+@media (max-width: 760px) {
+  .elements__flex-container {
+    margin-top: 21px;
+    margin-bottom: 25px;
+  }
+}

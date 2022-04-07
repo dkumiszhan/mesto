@@ -1,5 +1,5 @@
 .profile__button-add {
-  background-image: url('../../../images/plus.svg');
+  background-image: url('../../../images/Vectorsmall.svg');
   background-repeat: no-repeat;
   background-position: center;
   width: 150px;
@@ -9,13 +9,12 @@
   border-radius: 2px;
   background-color: #000000;
   opacity: 1;
+  transition: opacity 0.8s linear;
 }
 
 .profile__button-add:hover {
-  opacity: 0.8;
-  background-color: rgba(0, 0, 0, 0.8);
+  opacity: 0.6;
   transition: opacity 0.8s linear;
-  transition: background-color 0.8s linear;
   cursor: pointer;
 } 
 

@@ -17,12 +17,12 @@
           <div class="profile__info">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
             <p class="profile__description">Исследователь океана</p>
-            <button class="profile__button-pen"></button>
+            <button type="button" class="profile__button-pen"></button>
           </div>
         </div>
         
         
-        <button class="profile__button-add"></button>
+        <button type="button" class="profile__button-add"></button>
       </section>
       <section class="elements">
         <ul class="elements__list">
@@ -30,7 +30,7 @@
             <img class="elements__list-image" src="./images/karachaevsk.jpg" alt="Карачаевск">
             <div class="elements__flex-container">
               <h2 class="elements__list-title">Карачаевск</h2>
-              <button class="elements__list-button elements__list-button_inactive"></button>
+              <button type="button" class="elements__list-button"></button>
             </div>
             
           </li>
@@ -38,60 +38,58 @@
             <img class="elements__list-image" src="./images/andres-molina-r9zOjNfrvbU-unsplash-kaktusy.jpg" alt="Кактусы">
             <div class="elements__flex-container">
               <h2 class="elements__list-title">Кактусы</h2>
-              <button class="elements__list-button elements__list-button_inactive"></button>
+              <button type="button" class="elements__list-button"></button>
             </div>
           </li>
           <li class="elements__list-item">
             <img class="elements__list-image" src="./images/gora_elbrus.jpg" alt="Гора Эльбрус">
             <div class="elements__flex-container">
               <h2 class="elements__list-title">Гора Эльбрус</h2>
-              <button class="elements__list-button elements__list-button_inactive"></button>
+              <button type="button" class="elements__list-button"></button>
             </div>
           </li>
           <li class="elements__list-item">
             <img class="elements__list-image" src="./images/damiano-baschiera-wVRM33r6Cmc-unsplash-NationalBotanicGarden.jpg" alt="Растительность">
             <div class="elements__flex-container">
               <h2 class="elements__list-title">Ботанический сад</h2>
-              <button class="elements__list-button elements__list-button_inactive"></button>
+              <button type="button" class="elements__list-button"></button>
             </div>
           </li>
           <li class="elements__list-item">
             <img class="elements__list-image" src="./images/hanna-balan-Jy1tCfVviy0-unsplash-pavlin.jpg" alt="Павлин">
             <div class="elements__flex-container">
               <h2 class="elements__list-title">Павлин</h2>
-              <button class="elements__list-button elements__list-button_inactive"></button>
+              <button type="button" class="elements__list-button"></button>
             </div>
           </li>
           <li class="elements__list-item">
             <img class="elements__list-image" src="./images/melanie-weidmann-rnp2zWV8Tkg-unsplash-zurichZoo.jpg" alt="Зоопарк в Цурехе">
             <div class="elements__flex-container">
               <h2 class="elements__list-title">Зоопарк в Цурехе</h2>
-              <button class="elements__list-button elements__list-button_inactive"></button>
+              <button type="button" class="elements__list-button"></button>
             </div>
           </li>
         </ul>
       </section>
-      <form class="popup">
-        <div class="popup__container">
-          <button class="popup__close" type="button"></button>
-          <h2 class="popup__title">Редактировать профиль</h2>
-          <ul class="popup__inputs">
-            <li>
-              <input class="popup__input-name" type="text" placeholder="Имя">
-              <hr class="popup__hrline">
-            </li>
-            <li>
-              <input class="popup__input-description" type="text" placeholder="О себе">
-              <hr class="popup__hrline">
-            </li>
-          </ul>
-          <input class="popup__buttonsave" type="submit" value="Сохранить">
-        </div>         
-      </form>
+      
     </main>
     <footer class="footer">
       <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
     </footer>
-    <script src="./index.js"></script>
+    <div class="popup">
+      <div class="popup__container">
+        <button class="popup__close" type="button"></button>
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <form class="popup__inputs">
+          <fieldset class="popup__fieldset">
+            <input class="popup__input popup__input_type_name" type="text" name="name" placeholder="Имя">
+            <input class="popup__input popup__input_type_description" type="text" name="description" placeholder="О себе">
+            <input class="popup__button-save" type="submit" value="Сохранить">
+          </fieldset>
+          
+        </form>
+      </div>         
+    </div>
+    <script src="./scripts/index.js"></script>
   </body>
 </html>
