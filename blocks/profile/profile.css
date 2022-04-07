@@ -10,7 +10,9 @@
 @media (max-width: 760px) {
   .profile {
     flex-direction: column;
-    row-gap: 36px;
+    row-gap: 32px;
     min-width: 282px;
+    margin-bottom: 36px;
   }
 }
+

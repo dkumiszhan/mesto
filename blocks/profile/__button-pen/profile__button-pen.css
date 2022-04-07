@@ -17,3 +17,10 @@
   transition: opacity 0.8s linear;
   cursor: pointer;
 }
+
+@media (max-width: 760px) {
+  .profile__button-pen {
+    width: 18px;
+    height: 18px;
+  }
+}
