@@ -1,27 +1,32 @@
-console.log('hello world');
+const inputName = document.querySelector('.popup__input_type_name');
+const inputDescription = document.querySelector('.popup__input_type_description');
+const popup = document.querySelector('.popup');
+const buttonPen = document.querySelector('.profile__button-pen');
+const profileName = document.querySelector('.profile__name');
+const profileDescription = document.querySelector('.profile__description');
+const popupClose = document.querySelector('.popup .popup__close');
 
-document.querySelector('.profile__button-pen').addEventListener('click', function() {
-    document.querySelector('.popup__input_type_name').value = document.querySelector('.profile__name').innerText;
-    document.querySelector('.popup__input_type_description').value = document.querySelector('.profile__description').innerText;
-    document.querySelector('.popup').classList.add('popup_opened');
+function closePopup() {
+  popup.classList.remove('popup_opened');
+}
+
+buttonPen.addEventListener('click', function() {
+    inputName.value = profileName.innerText;
+    inputDescription.value = profileDescription.innerText;
+    popup.classList.add('popup_opened');
 });
 
-document.querySelector('.popup .popup__close').addEventListener('click', function() {
+popupClose.addEventListener('click', function() {
     console.log('closing popup');
-    document.querySelector('.popup').classList.remove('popup_opened');
-    document.querySelector('.popup__input_type_name').value = '';
-    document.querySelector('.popup__input_type_description').value = ''; 
+    closePopup();
+    inputName.value = '';
+    inputDescription.value = ''; 
 });
 
-document.querySelector('.popup').addEventListener('submit', function(evt) {
+popup.addEventListener('submit', function(evt) {
     evt.preventDefault();
-
-    console.log('asdasdf');
-    console.log('called ' + document.querySelector('.popup__input_type_name').value);
-    document.querySelector('.profile__name').innerText = document.querySelector('.popup__input_type_name').value;
-    document.querySelector('.profile__description').innerText = document.querySelector('.popup__input_type_description').value;
-    document.querySelector('.popup').classList.remove('popup_opened');
+    profileName.innerText = inputName.value;
+    profileDescription.innerText = inputDescription.value;
+    closePopup();
 });
 
-
-console.log('done');
