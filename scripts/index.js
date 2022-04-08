@@ -5,6 +5,7 @@ const buttonPen = document.querySelector('.profile__button-pen');
 const profileName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__description');
 const popupClose = document.querySelector('.popup .popup__close');
+const popupForm = document.querySelector('.popup__inputs');
 
 function closePopup() {
   popup.classList.remove('popup_opened');
@@ -23,7 +24,7 @@ popupClose.addEventListener('click', function() {
     inputDescription.value = ''; 
 });
 
-popup.addEventListener('submit', function(evt) {
+popupForm.addEventListener('submit', function(evt) {
     evt.preventDefault();
     profileName.innerText = inputName.value;
     profileDescription.innerText = inputDescription.value;
