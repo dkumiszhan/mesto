@@ -26,7 +26,7 @@
       </section>
       <section class="elements">
         <ul class="elements__list">
-          <li class="elements__list-item">
+          <!-- <li class="elements__list-item">
             <img class="elements__list-image" src="./images/karachaevsk.jpg" alt="Карачаевск">
             <div class="elements__flex-container">
               <h2 class="elements__list-title">Карачаевск</h2>
@@ -68,7 +68,7 @@
               <h2 class="elements__list-title">Зоопарк в Цурехе</h2>
               <button type="button" class="elements__list-button"></button>
             </div>
-          </li>
+          </li> -->
         </ul>
       </section>
       
@@ -76,6 +76,7 @@
     <footer class="footer">
       <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
     </footer>
+
     <div class="popup">
       <div class="popup__container">
         <button class="popup__close" type="button"></button>
@@ -90,6 +91,18 @@
         </form>
       </div>         
     </div>
+
+    <template class="template-elements">
+      <li class="elements__list-item">
+        <img class="elements__list-image" alt="name">
+        <div class="elements__flex-container">
+          <h2 class="elements__list-title"></h2>
+          <button class="elements__list-button elements__list-button_inactive"></button>
+        </div>
+      </li>
+
+      </div>
+    </template>
     <script src="./scripts/index.js"></script>
   </body>
 </html>
