@@ -6,4 +6,5 @@
   white-space: nowrap;
   overflow: hidden;
   border-radius: 10px;
+  position: relative;
 }

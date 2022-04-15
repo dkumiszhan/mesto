@@ -1,33 +1,149 @@
 const inputName = document.querySelector('.popup__input_type_name');
 const inputDescription = document.querySelector('.popup__input_type_description');
-const popup = document.querySelector('.popup');
+const popupProfile = document.querySelector('.popup_place_profile');
 const buttonPen = document.querySelector('.profile__button-pen');
 const profileName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__description');
-const popupClose = document.querySelector('.popup .popup__close');
+const popupClose = document.querySelectorAll('.popup .popup__close');
 const popupForm = document.querySelector('.popup__inputs');
 
-function closePopup() {
-  popup.classList.remove('popup_opened');
+const popupAddCard = document.querySelector('.popup_place_add-card');
+const buttonAdd = document.querySelector('.profile__button-add');
+
+
+const popupFormAdd = document.querySelector('.popup__inputs_type_add');
+
+
+const initialCards = [
+    {
+      name: 'Архыз',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+    },
+    {
+      name: 'Челябинская область',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+    },
+    {
+      name: 'Иваново',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+    },
+    {
+      name: 'Камчатка',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+    },
+    {
+      name: 'Холмогорский район',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+    },
+    {
+      name: 'Байкал',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+    }
+  ];
+
+const elementsList = document.querySelector('.elements__list');
+const template = document.querySelector('.template-elements');
+
+function render() {
+  const html = initialCards.map(getElement);
+  elementsList.append(...html);
+}
+
+function getElement(item) {
+  const getElementTemplate = template.content.cloneNode(true);
+  const elementListTitle = getElementTemplate.querySelector('.elements__list-title');
+  elementListTitle.textContent = item.name;
+  const elementListImage = getElementTemplate.querySelector('.elements__list-image');
+  elementListImage.src = item.link;
+  const removeButton = getElementTemplate.querySelector('.elements__remove');
+  removeButton.addEventListener('click', removeElement);
+  const likeButton = getElementTemplate.querySelector('.elements__list-button');
+  likeButton.addEventListener('click', likeElement);
+  const listImage = getElementTemplate.querySelector('.elements__list-image');
+  listImage.addEventListener('click', showImage);
+
+  return getElementTemplate;
+
+}
+
+render();
+
+const popupImage = document.querySelector('.popup__image');
+const popupShowImage = document.querySelector('.popup_place_show-card');
+const popupTitleShowCard = document.querySelector('.popup__title_place_show-card');
+
+
+function showImage(evt) {
+  console.log(evt);
+  const element = evt.target;
+  popupImage.src = element.src;
+  
+  popupShowImage.classList.add('popup_opened');
+  popupTitleShowCard.textContent = element.nextElementSibling.children[0].textContent;
+  console.log(element.nextElementSibling.children[0].textContent);
+}
+
+
+
+
+function likeElement(evt) {
+  const element = evt.target;
+  if (element.classList.contains('elements__list-button_active')) {
+    element.classList.remove('elements__list-button_active');
+  }
+  else {
+    element.classList.add('elements__list-button_active');
+  }
+}
+
+function removeElement(evt) {
+  const element = evt.target.closest('.elements__list-item');
+  element.remove();
+  
+}
+
+function closePopup(evt) {
+  evt.target.parentNode.parentNode.classList.remove('popup_opened');
 }
 
 buttonPen.addEventListener('click', function() {
     inputName.value = profileName.innerText;
     inputDescription.value = profileDescription.innerText;
-    popup.classList.add('popup_opened');
+    popupProfile.classList.add('popup_opened');
 });
 
-popupClose.addEventListener('click', function() {
+buttonAdd.addEventListener('click', function() {
+    
+    popupAddCard.classList.add('popup_opened');
+    console.log('button add clicked');
+
+});
+
+
+for (let i = 0; i < popupClose.length; i++) {
+  popupClose[i].addEventListener('click', function(evt) {
     console.log('closing popup');
-    closePopup();
+    closePopup(evt);
     inputName.value = '';
     inputDescription.value = ''; 
-});
+  });
+}
+
 
 popupForm.addEventListener('submit', function(evt) {
     evt.preventDefault();
     profileName.innerText = inputName.value;
     profileDescription.innerText = inputDescription.value;
-    closePopup();
+    closePopup(evt);
 });
 
+
+popupFormAdd.addEventListener('submit', function(evt) {
+  evt.preventDefault();
+  const inputTitle = document.querySelector('.popup__input_type_title').value;
+  const inputLink = document.querySelector('.popup__input_type_link').value;
+  const element = getElement({name: inputTitle, link: inputLink});
+  elementsList.prepend(element);
+  closePopup(evt);
+  
+});

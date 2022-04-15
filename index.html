@@ -26,7 +26,7 @@
       </section>
       <section class="elements">
         <ul class="elements__list">
-          <li class="elements__list-item">
+          <!-- <li class="elements__list-item">
             <img class="elements__list-image" src="./images/karachaevsk.jpg" alt="Карачаевск">
             <div class="elements__flex-container">
               <h2 class="elements__list-title">Карачаевск</h2>
@@ -68,7 +68,7 @@
               <h2 class="elements__list-title">Зоопарк в Цурехе</h2>
               <button type="button" class="elements__list-button"></button>
             </div>
-          </li>
+          </li> -->
         </ul>
       </section>
       
@@ -76,8 +76,9 @@
     <footer class="footer">
       <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
     </footer>
-    <div class="popup">
-      <div class="popup__container">
+
+    <div class="popup popup_place_profile">
+      <div class="popup__container popup__container_place_profile">
         <button class="popup__close" type="button"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
         <form class="popup__inputs" name="popup-form">
@@ -90,6 +91,50 @@
         </form>
       </div>         
     </div>
+
+    <div class="popup popup_place_add-card">
+      <div class="popup__container popup__container_place_add-card">
+        <button class="popup__close" type="button"></button>
+        <h2 class="popup__title">Новое место</h2>
+        <form class="popup__inputs popup__inputs_type_add" name="popup-form">
+          <fieldset class="popup__fieldset">
+            <input class="popup__input popup__input_type_title" type="text" name="title" placeholder="Название">
+            <input class="popup__input popup__input_type_link" type="text" name="link" placeholder="Ссылка на картинку">
+            <input class="popup__button-save" type="submit" value="Создать">
+          </fieldset>
+          
+        </form>
+      </div>         
+    </div>
+
+    <div class="popup popup_place_show-card">
+      <div class="popup__container popup__container_place_show-card">
+        <button class="popup__close popup__close_place_show-card" type="button"></button>
+        <img class="popup__image" alt="photo">
+        <h2 class="popup__title popup__title_place_show-card"></h2>
+        <!-- <form class="popup__inputs" name="popup-form">
+          <fieldset class="popup__fieldset">
+            <input class="popup__input popup__input_type_name" type="text" name="name" placeholder="Имя">
+            <input class="popup__input popup__input_type_description" type="text" name="description" placeholder="О себе">
+            <input class="popup__button-save" type="submit" value="Сохранить">
+          </fieldset>
+          
+        </form>  -->
+      </div>         
+    </div>
+
+    <template class="template-elements">
+      <li class="elements__list-item">
+        <button type="button" class="elements__remove"></button>
+        <img class="elements__list-image" alt="name">
+        <div class="elements__flex-container">
+          <h2 class="elements__list-title"></h2>
+          <button type="button" class="elements__list-button elements__list-button_inactive"></button>
+        </div>
+      </li>
+
+      </div>
+    </template>
     <script src="./scripts/index.js"></script>
   </body>
 </html>
