@@ -59,17 +59,41 @@ function getElement(item) {
   removeButton.addEventListener('click', removeElement);
   const likeButton = getElementTemplate.querySelector('.elements__list-button');
   likeButton.addEventListener('click', likeElement);
+  const listImage = getElementTemplate.querySelector('.elements__list-image');
+  listImage.addEventListener('click', showImage);
+
   return getElementTemplate;
 
 }
 
 render();
 
-function likeElement(evt) {
+const popupImage = document.querySelector('.popup__image');
+const popupShowImage = document.querySelector('.popup_place_show-card');
+const popupTitleShowCard = document.querySelector('.popup__title_place_show-card');
+
+
+function showImage(evt) {
   console.log(evt);
   const element = evt.target;
-  element.classList.add('elements__list-button_active');
-  element.classList.remove('element__list-button_inactive');
+  popupImage.src = element.src;
+  
+  popupShowImage.classList.add('popup_opened');
+  popupTitleShowCard.textContent = element.nextElementSibling.children[0].textContent;
+  console.log(element.nextElementSibling.children[0].textContent);
+}
+
+
+
+
+function likeElement(evt) {
+  const element = evt.target;
+  if (element.classList.contains('elements__list-button_active')) {
+    element.classList.remove('elements__list-button_active');
+  }
+  else {
+    element.classList.add('elements__list-button_active');
+  }
 }
 
 function removeElement(evt) {
@@ -105,22 +129,6 @@ for (let i = 0; i < popupClose.length; i++) {
   });
 }
 
-// popupClose.addEventListener('click', function(evt) {
-//     console.log('closing popup');
-//     closePopup(evt);
-//     inputName.value = '';
-//     inputDescription.value = ''; 
-// });
-
-// for (let i = 0; i < popupForm.length; i++) {
-//     popupForm[i].addEventListener('submit', function(evt) {
-//         console.log('submitting form');
-//         evt.preventDefault();
-//         profileName.innerText = inputName.value;
-//         profileDescription.innerText = inputDescription.value;
-//         closePopup(evt);
-//     });
-//   }
 
 popupForm.addEventListener('submit', function(evt) {
     evt.preventDefault();
