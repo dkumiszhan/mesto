@@ -1,5 +1,5 @@
 .popup__container_place_show-card {
-  width: 816px;
+  width: auto;
   max-width: 75vw;
   background-color: rgba(0, 0, 0, 0);
   display: flex;
@@ -10,6 +10,6 @@
 
 @media (max-width: 760px) {
     .popup__container_place_show-card {
-      width: 240px;
+      width: auto;
     }
   }
