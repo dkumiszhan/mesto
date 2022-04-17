@@ -82,9 +82,11 @@ function openPopup(popup) {
 function showImage(evt) {
   const element = evt.target;
   popupImage.src = element.src;
-  popupImage.alt = element.nextElementSibling.children[0].textContent;
+  const currentListElement = element.closest('.elements__list-item');
+  const currentListImage = currentListElement.querySelector('.elements__list-image');
+  popupImage.alt = currentListImage.alt;
+  popupTitleShowCard.textContent = currentListImage.alt;
   openPopup(popupShowImage);
-  popupTitleShowCard.textContent = element.nextElementSibling.children[0].textContent;
 }
 
 
@@ -114,24 +116,20 @@ buttonPen.addEventListener('click', function() {
 
 buttonAdd.addEventListener('click', function() {
     openPopup(popupAddCard);
-    console.log('button add clicked');
 
 });
 
 popupCloseProfile.addEventListener('click', function() {
-  console.log('closing profile popup');
   closePopup(popupProfile);
   inputName.value = '';
   inputDescription.value = '';
 });
 
 popupCloseAddCard.addEventListener('click', function() {
-  console.log('closing add-card popup');
   closePopup(popupAddCard);
 });
 
 popupCloseShowCard.addEventListener('click', function() {
-  console.log('closing show-card popup');
   closePopup(popupShowImage);
 });
 
