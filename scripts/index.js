@@ -147,3 +147,7 @@ popupFormAdd.addEventListener('submit', function(evt) {
   closePopup(evt);
   
 });
+
+function enableValidation(config) {
+  
+}

@@ -38,3 +38,4 @@
 @import url(../blocks/popup/__title/_place/_show-card/popup__title_place_show-card.css);
 @import url(../blocks/popup/__close/_place/_show-card/popup__close_place_show-card.css);
 @import url(../blocks/popup/_place/_show-card/popup_place_show-card.css);
+@import url(../blocks/popup/__error/popup__error.css);
