@@ -149,5 +149,68 @@ popupFormAdd.addEventListener('submit', function(evt) {
 });
 
 function enableValidation(config) {
+  const form = document.querySelector(config.formSelector);
+  const inputs = form.querySelectorAll(config.inputSelector);
+
+  inputs.forEach((input) => {
+    console.log('testing input');
+    input.addEventListener('input', (evt) => handleFormInput(evt, form, config));
+    
+  });
+
+  form.addEventListener('submit', (evt) => handleFormSubmit(evt, form));
+  toggleButton(form, config);
+}
+
+function handleFormInput(evt, form, config) {
+  //const input = evt.target;
+  //const errorNode = form.querySelector(`.${input.id}-error`);
+  //toggleButton(form, config);
+  // if (input.validity.valid) {
+  //   errorNode.textContent = '';
+  // }
+  // else {
+  //   errorNode.textContent = input.validationMessage;
+  // }  
+
+  const inputs = form.querySelectorAll(`.${config.inputErrorClass}`);
+  toggleButton(form, config);
+  inputs.forEach((element) => {
+    console.log(element.id);
+    const errorNode = form.querySelector(`.${element.id}-error`);
+    if (element.validity.valid) {
+      errorNode.textContent = '';
+    }
+    else {
+      errorNode.textContent = element.validationMessage;
+    }  
+  });
+
   
 }
+
+function handleFormSubmit(evt, form) {
+  evt.preventDefault();
+}
+
+function toggleButton(form, config) {
+  const button = form.querySelector(config.submitButtonSelector);
+  console.log(form.checkValidity());
+  button.classList.toggle(config.inactiveButtonClass, !form.checkValidity());
+}
+
+enableValidation({
+  formSelector: '.popup__inputs_type_edit',
+  inputSelector: '.popup__input-edit',
+  submitButtonSelector: '.popup__button-edit',
+  inactiveButtonClass: 'popup__button-save_type_disabled',
+  inputErrorClass: 'popup__input-edit',
+});
+
+enableValidation({
+  formSelector: '.popup__inputs_type_add',
+  inputSelector: '.popup__input-add',
+  submitButtonSelector: '.popup__button-add',
+  inactiveButtonClass: 'popup__button-save_type_disabled',
+  inputErrorClass: 'popup__input-add',
+});
