@@ -3,7 +3,6 @@ function enableValidation(config) {
     const inputs = form.querySelectorAll(config.inputSelector);
   
     inputs.forEach((input) => {
-      console.log('testing input');
       input.addEventListener('input', (evt) => handleFormInput(evt, form, config));
       
     });
