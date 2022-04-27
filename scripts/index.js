@@ -108,6 +108,7 @@ function closePopup(popup) {
   popup.classList.remove('popup_opened');
 }
 
+
 buttonPen.addEventListener('click', function() {
     inputName.value = profileName.innerText;
     inputDescription.value = profileDescription.innerText;
@@ -139,7 +140,27 @@ popupFormEdit.addEventListener('submit', function(evt) {
     profileName.textContent = inputName.value;
     profileDescription.textContent = inputDescription.value;
     closePopup(popupProfile);
+const popupInputs = document.querySelectorAll('.popup__input');
+const popups = document.querySelectorAll('.popup');
 });
+
+  document.addEventListener('keyup', function(evt) {
+    
+    if (evt.key === 'Escape') {
+      
+      const openedPopup = document.querySelector('.popup_opened');
+      if (openedPopup) {
+        closePopup(openedPopup);
+      }
+    }
+  });
+
+  document.addEventListener('click', function(evt) {
+    if (evt.target.classList.contains('popup')) {
+      closePopup(evt.target);
+    }
+  });
+
 
 const inputTitle = document.querySelector('.popup__input_type_title');
 const inputLink = document.querySelector('.popup__input_type_link');
@@ -151,4 +172,24 @@ popupFormAdd.addEventListener('submit', function(evt) {
   closePopup(popupAddCard); 
   inputTitle.value = '';
   inputLink.value = '';
+});
+
+
+
+enableValidation({
+  formSelector: '.popup__inputs_type_edit',
+  inputSelector: '.popup__input-edit',
+  submitButtonSelector: '.popup__button-edit',
+  inactiveButtonClass: 'popup__button-save_type_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible',
+});
+
+enableValidation({
+  formSelector: '.popup__inputs_type_add',
+  inputSelector: '.popup__input-add',
+  submitButtonSelector: '.popup__button-add',
+  inactiveButtonClass: 'popup__button-save_type_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible',
 });
