@@ -74,7 +74,6 @@ const popupTitleShowCard = document.querySelector('.popup__title_place_show-card
 
 
 function showImage(evt) {
-  console.log(evt);
   const element = evt.target;
   popupImage.src = element.src;
   
@@ -132,6 +131,12 @@ const popups = document.querySelectorAll('.popup');
       if (openedPopup) {
         closePopup(openedPopup);
       }
+    }
+  });
+
+  document.addEventListener('click', function(evt) {
+    if (evt.target.classList.contains('popup')) {
+      closePopup(evt.target);
     }
   });
 
