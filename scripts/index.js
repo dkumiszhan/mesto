@@ -122,7 +122,18 @@ buttonAdd.addEventListener('click', function() {
 });
 
 const popupInputs = document.querySelectorAll('.popup__input');
+const popups = document.querySelectorAll('.popup');
 
+  document.addEventListener('keyup', function(evt) {
+    
+    if (evt.key === 'Escape') {
+      
+      const openedPopup = document.querySelector('.popup_opened');
+      if (openedPopup) {
+        closePopup(openedPopup);
+      }
+    }
+  });
 
 
 for (let i = 0; i < popupClose.length; i++) {
@@ -132,13 +143,6 @@ for (let i = 0; i < popupClose.length; i++) {
     inputName.value = '';
     inputDescription.value = ''; 
   });
-  popupInputs[i].addEventListener('keydown', function(evt) {
-    const popup = evt.target.parentNode.parentNode.parentNode.parentNode;
-    if (evt.keyCode === 27) {
-      closePopup(popup);
-    };
-  });
-
 }
 
 
