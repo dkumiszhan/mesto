@@ -7,7 +7,6 @@ function enableValidation(config) {
     inputs.forEach((input) => {
       input.addEventListener("input", (evt) => {
         handleFormInput(evt, form, config);
-        console.log("this is called");
       });
     });
     form.addEventListener("submit", (evt) => handleFormSubmit(evt, form));
@@ -15,7 +14,6 @@ function enableValidation(config) {
 }
 
 function handleFormInput(evt, form) {
-  console.log("handling");
   const input = evt.target;
   toggleButton(form);
   if (input.validity.valid) {
@@ -44,7 +42,6 @@ function handleFormSubmit(evt) {
 }
 
 function toggleButton(form) {
-  console.log("toggle button");
   const button = form.querySelector(validationConfig.submitButtonSelector);
   if (!form.checkValidity()) {
     disableSubmitButton(button);
