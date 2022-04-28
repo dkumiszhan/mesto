@@ -1,42 +1,64 @@
+let validationConfig = {};
 function enableValidation(config) {
+  validationConfig = config;
   const forms = document.querySelectorAll(".popup__inputs");
   forms.forEach((form) => {
     const inputs = form.querySelectorAll(config.inputSelector);
     inputs.forEach((input) => {
-      input.addEventListener("input", (evt) =>
-        handleFormInput(evt, form, config)
-      );
+      input.addEventListener("input", (evt) => {
+        handleFormInput(evt, form, config);
+        console.log("this is called");
+      });
     });
     form.addEventListener("submit", (evt) => handleFormSubmit(evt, form));
-    toggleButton(form, config);
   });
 }
 
-function handleFormInput(evt, form, config) {
+function handleFormInput(evt, form) {
+  console.log("handling");
   const input = evt.target;
-  const errorNode = form.querySelector(`.${input.id}-error`);
-  toggleButton(form, config);
+  toggleButton(form);
   if (input.validity.valid) {
-    errorNode.textContent = "";
-    input.classList.remove(config.inputErrorClass);
-    errorNode.classList.remove(config.errorClass);
+    disableInputError(input, form);
   } else {
-    errorNode.textContent = input.validationMessage;
-    input.classList.add(config.inputErrorClass);
-    errorNode.classList.add(config.errorClass);
+    enableInputError(input, form);
   }
 }
 
-function handleFormSubmit(evt, form) {
+function enableInputError(input, form) {
+  const errorNode = form.querySelector(`.${input.id}-error`);
+  errorNode.textContent = input.validationMessage;
+  input.classList.add(validationConfig.inputErrorClass);
+  errorNode.classList.add(validationConfig.errorClass);
+}
+
+function disableInputError(input, form) {
+  const errorNode = form.querySelector(`.${input.id}-error`);
+  errorNode.textContent = "";
+  input.classList.remove(validationConfig.inputErrorClass);
+  errorNode.classList.remove(validationConfig.errorClass);
+}
+
+function handleFormSubmit(evt) {
   evt.preventDefault();
 }
 
-function toggleButton(form, config) {
-  const button = form.querySelector(config.submitButtonSelector);
-  button.classList.toggle(config.inactiveButtonClass, !form.checkValidity());
+function toggleButton(form) {
+  console.log("toggle button");
+  const button = form.querySelector(validationConfig.submitButtonSelector);
   if (!form.checkValidity()) {
-    button.disabled = true;
+    disableSubmitButton(button);
   } else {
-    button.disabled = false;
+    enableSubmitButton(button);
   }
+}
+
+function disableSubmitButton(button) {
+  button.classList.add(validationConfig.inactiveButtonClass);
+  button.disabled = true;
+}
+
+function enableSubmitButton(button) {
+  button.classList.remove(validationConfig.inactiveButtonClass);
+  button.disabled = false;
 }
