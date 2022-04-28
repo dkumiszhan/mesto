@@ -58,16 +58,16 @@ function openPopup(popup) {
   popup.classList.add("popup_opened");
   document.addEventListener("keydown", closeOnEsc);
   document.addEventListener("click", closeOnOverlayClick);
-  if (popup.querySelector(".popup__button-save")) {
-    const currentButtonSave = popup.querySelector(".popup__button-save");
-    currentButtonSave.disabled = true;
-    currentButtonSave.classList.add("popup__button-save_type_disabled");
-  }
 }
 
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
   document.removeEventListener("keydown", closeOnEsc);
+  const inputs = popup.querySelectorAll(".popup__input");
+  const form = popup.querySelector(".popup__inputs");
+  inputs.forEach((input) => {
+    clearInput(input, form);
+  });
 }
 
 function showImage(evt) {
@@ -100,6 +100,8 @@ buttonPen.addEventListener("click", function () {
 
 buttonAdd.addEventListener("click", function () {
   openPopup(popupAddCard);
+  const currentButtonSave = popupFormAdd.querySelector(".popup__button-save");
+  disableSubmitButton(currentButtonSave);
 });
 
 popupCloseProfile.addEventListener("click", function () {
@@ -112,6 +114,11 @@ popupCloseAddCard.addEventListener("click", function () {
   closePopup(popupAddCard);
 });
 
+function clearInput(input, form) {
+  input.value = "";
+  disableInputError(input, form);
+}
+
 popupCloseShowCard.addEventListener("click", function () {
   closePopup(popupShowImage);
 });
@@ -121,8 +128,6 @@ popupFormEdit.addEventListener("submit", function (evt) {
   profileName.textContent = inputName.value;
   profileDescription.textContent = inputDescription.value;
   closePopup(popupProfile);
-  const popupInputs = document.querySelectorAll(".popup__input");
-  const popups = document.querySelectorAll(".popup");
 });
 
 function closeOnEsc(evt) {
@@ -149,8 +154,7 @@ popupFormAdd.addEventListener("submit", function (evt) {
   inputTitle.value = "";
   inputLink.value = "";
   const currentButtonSave = popupFormAdd.querySelector(".popup__button-save");
-  currentButtonSave.disabled = true;
-  currentButtonSave.classList.add("popup__button-save_type_disabled");
+  disableSubmitButton(currentButtonSave);
 });
 
 enableValidation({
