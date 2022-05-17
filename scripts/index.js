@@ -46,7 +46,16 @@ function getElement(item) {
   return getElementTemplate;
 }
 
-render();
+// render();
+
+import { Card } from "./Card.js";
+
+initialCards.forEach((item) => {
+  const card = new Card(item.link, item.name, ".template-elements");
+  const cardElement = card.generateCard();
+  console.log(cardElement);
+  cardsContainer.append(cardElement);
+});
 
 const popupImage = document.querySelector(".popup__image");
 const popupShowImage = document.querySelector(".popup_place_show-card");
