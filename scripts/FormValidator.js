@@ -7,19 +7,17 @@ export class FormValidator {
     this._inactiveButtonClass = formSelectors.inactiveButtonClass;
     this._inputErrorClass = formSelectors.inputErrorClass;
     this._errorClass = formSelectors.errorClass;
+    this._submitButton = this._form.querySelector(this._submitButtonSelector);
   }
 
-  _disableInputError(evt) {
-    const currentInput = evt.target;
+  disableInputError(currentInput) {
     const errorNode = this._form.querySelector(`.${currentInput.id}-error`);
     errorNode.textContent = "";
     currentInput.classList.remove(this._inputErrorClass);
     errorNode.classList.remove(this._errorClass);
   }
 
-  _enableInputError(evt) {
-    const currentInput = evt.target;
-
+  _enableInputError(currentInput) {
     const errorNode = this._form.querySelector(`.${currentInput.id}-error`);
     errorNode.textContent = currentInput.validationMessage;
     currentInput.classList.add(this._inputErrorClass);
@@ -27,33 +25,30 @@ export class FormValidator {
   }
 
   _toggleButton() {
-    const button = this._form.querySelector(this._submitButtonSelector);
     if (!this._form.checkValidity()) {
-      disableSubmitButton(this._form.querySelector(this._submitButtonSelector));
+      disableSubmitButton(this._submitButton);
     } else {
       this._enableSubmitButton();
     }
   }
 
-  _disableSubmitButton() {
-    const button = this._form.querySelector(this._submitButtonSelector);
-    button.classList.add(this._inactiveButtonClass);
-    button.disabled = true;
+  disableSubmitButton() {
+    this._submitButton.classList.add(this._inactiveButtonClass);
+    this._submitButton.disabled = true;
   }
 
   _enableSubmitButton() {
-    const button = this._form.querySelector(this._submitButtonSelector);
-    button.classList.remove(this._inactiveButtonClass);
-    button.disabled = false;
+    this._submitButton.classList.remove(this._inactiveButtonClass);
+    this._submitButton.disabled = false;
   }
 
   _handleFormInput(evt) {
     this._toggleButton();
     const input = evt.target;
     if (input.validity.valid) {
-      this._disableInputError(evt);
+      this.disableInputError(input);
     } else {
-      this._enableInputError(evt);
+      this._enableInputError(input);
     }
   }
 

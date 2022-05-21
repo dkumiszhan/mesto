@@ -2,6 +2,7 @@
   width: 430px;
   background-color: #ffffff;
   border-radius: 10px;
+  height: 330px;
 }
 
 @media (max-width: 760px) {
