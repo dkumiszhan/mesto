@@ -8,7 +8,7 @@ const popupFormAdd = document.querySelector(".popup__inputs_type_add");
 function openPopup(popup) {
   popup.classList.add("popup_opened");
   document.addEventListener("keydown", closeOnEsc);
-  document.addEventListener("click", closeOnOverlayClick);
+  popup.addEventListener("click", closeOnOverlayClick);
 }
 
 function closePopup(popup) {
@@ -29,15 +29,6 @@ function closeOnOverlayClick(evt) {
   }
 }
 
-function disableSubmitButton(button) {
-  button.classList.add("popup__button-save_type_disabled");
-  button.disabled = true;
-}
-
-function clearInput(input, form) {
-  input.value = "";
-}
-
 export {
   popupImage,
   popupShowImage,
@@ -47,6 +38,4 @@ export {
   closeOnEsc,
   closeOnOverlayClick,
   closePopup,
-  disableSubmitButton,
-  clearInput,
 };
