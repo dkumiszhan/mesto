@@ -42,11 +42,12 @@ buttonPen.addEventListener("click", function () {
   inputName.value = profileName.innerText;
   inputDescription.value = profileDescription.innerText;
 
-  const inputs = popupProfile.querySelectorAll(".popup__input");
-  const form = popupProfile.querySelector(".popup__inputs");
-  inputs.forEach((input) => {
-    profileValidation.disableInputError(input);
-  });
+  //const inputs = popupProfile.querySelectorAll(".popup__input");
+  //const form = popupProfile.querySelector(".popup__inputs");
+  //inputs.forEach((input) => {
+  //  profileValidation.disableInputError(input);
+  //});
+  profileValidation.resetValidation();
 
   openPopup(popupProfile);
 });

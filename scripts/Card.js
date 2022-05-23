@@ -2,7 +2,6 @@ import {
   popupImage,
   popupShowImage,
   popupTitleShowCard,
-  popupFormAdd,
   openPopup,
 } from "./utils.js";
 
@@ -60,10 +59,8 @@ export class Card {
     this._likeButton.addEventListener("click", () => {
       this._handleLikeCard();
     });
-    this._element
-      .querySelector(".elements__list-image")
-      .addEventListener("click", () => {
-        this._handleShowCard();
-      });
+    this._cardImage.addEventListener("click", () => {
+      this._handleShowCard();
+    });
   }
 }
