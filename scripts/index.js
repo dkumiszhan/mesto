@@ -25,22 +25,52 @@ const template = document.querySelector(".template-elements");
 import { Card } from "./Card.js";
 import { initialCards } from "./cards.js";
 
+import PopupWithImage from "./PopupWithImage.js";
+
 import { popupShowImage, openPopup, closePopup } from "./utils.js";
 
-function createCard(link, name, template) {
-  const card = new Card(link, name, template);
+// function createCard(link, name, template) {
+//   const card = new Card(link, name, template);
+//   const cardElement = card.generateCard();
+//   return cardElement;
+// }
+
+const popupWithImage = new PopupWithImage(".popup_place_show-card");
+
+function createCardNew(data) {
+  const card = new Card(
+    {
+      data: data,
+      handleCardClick: () => {
+        popupWithImage.open(data.link, data.name);
+        console.log("called handleCardClick");
+      },
+    },
+    ".template-elements"
+  );
   const cardElement = card.generateCard();
+
   return cardElement;
 }
 
 initialCards.forEach((item) => {
-  const cardElement = createCard(item.link, item.name, ".template-elements");
+  const cardElement = createCardNew(item);
   cardsContainer.append(cardElement);
 });
 
+// initialCards.forEach((item) => {
+//   const cardElement = createCard(item.link, item.name, ".template-elements");
+//   cardsContainer.append(cardElement);
+// });
+
+import UserInfo from "./UserInfo.js";
+
+const userInfo = new UserInfo(".profile__name", ".profile__description");
+
 buttonPen.addEventListener("click", function () {
-  inputName.value = profileName.innerText;
-  inputDescription.value = profileDescription.innerText;
+  let { name, description } = userInfo.getUserInfo();
+  inputName.value = name;
+  inputDescription.value = description;
 
   //const inputs = popupProfile.querySelectorAll(".popup__input");
   //const form = popupProfile.querySelector(".popup__inputs");
@@ -69,27 +99,52 @@ popupCloseShowCard.addEventListener("click", function () {
   closePopup(popupShowImage);
 });
 
-popupFormEdit.addEventListener("submit", function (evt) {
-  evt.preventDefault();
-  profileName.textContent = inputName.value;
-  profileDescription.textContent = inputDescription.value;
-  closePopup(popupProfile);
+// popupFormEdit.addEventListener("submit", function (evt) {
+//   evt.preventDefault();
+//   profileName.textContent = inputName.value;
+//   profileDescription.textContent = inputDescription.value;
+//   closePopup(popupProfile);
+// });
+
+function callbackEdit(data) {
+  // evt.preventDefault();
+  // profileName.textContent = inputName.value;
+  // profileDescription.textContent = inputDescription.value;
+  // closePopup(popupProfile);
+
+  // profileName.textContent = data["name-input"];
+  // profileDescription.textContent = data["description-input"];
+  userInfo.setUserInfo(data["name-input"], data["description-input"]);
+}
+
+import PopupWithForm from "./PopupWithForm.js";
+const popupWithFormEdit = new PopupWithForm(
+  ".popup_place_profile",
+  callbackEdit
+);
+
+const popupWithFormAdd = new PopupWithForm(".popup_place_add-card", (data) => {
+  const element = createCardNew(data);
+  cardsContainer.prepend(element);
 });
+
+popupWithFormEdit.setEventListeners();
+popupWithFormAdd.setEventListeners();
 
 const inputTitle = document.querySelector(".popup__input_type_title");
 const inputLink = document.querySelector(".popup__input_type_link");
 
-popupFormAdd.addEventListener("submit", function (evt) {
-  evt.preventDefault();
-  const element = createCard(
-    inputLink.value,
-    inputTitle.value,
-    ".template-elements"
-  );
-  cardsContainer.prepend(element);
-  closePopup(popupAddCard);
-  evt.target.reset();
-});
+// popupFormAdd.addEventListener("submit", function (evt) {
+//   evt.preventDefault();
+//   const element = createCard(
+//     inputLink.value,
+//     inputTitle.value,
+//     ".template-elements"
+//   );
+//   cardsContainer.prepend(element);
+//   closePopup(popupAddCard);
+//   evt.target.reset();
+// });
 
 import { FormValidator } from "./FormValidator.js";
 
