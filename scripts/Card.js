@@ -5,8 +5,6 @@ import {
   openPopup,
 } from "./utils.js";
 
-//import Popup from "./Popup.js";
-
 export class Card {
   constructor({ data, handleCardClick }, templateSelector) {
     this._imageLink = data.link; //data.link?
@@ -63,7 +61,6 @@ export class Card {
       this._handleLikeCard();
     });
     this._cardImage.addEventListener("click", () => {
-      //this._handleShowCard();
       this._handleCardClick();
     });
   }

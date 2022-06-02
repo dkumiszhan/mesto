@@ -6,8 +6,6 @@ export default class UserInfo {
 
   getUserInfo() {
     const data = {};
-    console.log("called getUserInfo");
-    console.log(this._description.textContent);
     data.name = this._name.textContent;
     data.description = this._description.textContent;
     return data;
