@@ -1,3 +1,5 @@
+import "./index.css";
+
 const inputName = document.querySelector(".popup__input_type_name");
 const inputDescription = document.querySelector(
   ".popup__input_type_description"
@@ -15,10 +17,10 @@ const popupCloseShowCard = document.querySelector(
 const buttonAdd = document.querySelector(".profile__button-add");
 const cardsContainer = document.querySelector(".elements__list");
 
-import { Card } from "./Card.js";
-import { initialCards } from "./cards.js";
+import { Card } from "../scripts/Card.js";
+import { initialCards } from "../scripts/cards.js";
 
-import PopupWithImage from "./PopupWithImage.js";
+import PopupWithImage from "../scripts/PopupWithImage.js";
 
 const popupWithImage = new PopupWithImage(".popup_place_show-card");
 
@@ -42,7 +44,7 @@ initialCards.forEach((item) => {
   cardsContainer.append(cardElement);
 });
 
-import UserInfo from "./UserInfo.js";
+import UserInfo from "../scripts/UserInfo.js";
 
 const userInfo = new UserInfo(".profile__name", ".profile__description");
 
@@ -76,7 +78,7 @@ function callbackEdit(data) {
   userInfo.setUserInfo(data["name-input"], data["description-input"]);
 }
 
-import PopupWithForm from "./PopupWithForm.js";
+import PopupWithForm from "../scripts/PopupWithForm.js";
 const popupWithFormEdit = new PopupWithForm(
   ".popup_place_profile",
   callbackEdit
@@ -91,7 +93,7 @@ popupWithFormEdit.setEventListeners();
 popupWithFormAdd.setEventListeners();
 popupWithImage.setEventListeners();
 
-import { FormValidator } from "./FormValidator.js";
+import { FormValidator } from "../scripts/FormValidator.js";
 
 const formEditProfile = document.querySelector(".popup__inputs_type_edit");
 const formAddCard = document.querySelector(".popup__inputs_type_add");
