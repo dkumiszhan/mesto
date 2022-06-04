@@ -6,10 +6,11 @@ import {
 } from "./utils.js";
 
 export class Card {
-  constructor(imageLink, imageTitle, templateSelector) {
-    this._imageLink = imageLink;
-    this._imageTitle = imageTitle;
+  constructor({ data, handleCardClick }, templateSelector) {
+    this._imageLink = data.link; //data.link?
+    this._imageTitle = data.name; //data.name?
     this._templateSelector = templateSelector;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -60,7 +61,7 @@ export class Card {
       this._handleLikeCard();
     });
     this._cardImage.addEventListener("click", () => {
-      this._handleShowCard();
+      this._handleCardClick();
     });
   }
 }
