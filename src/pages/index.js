@@ -8,14 +8,14 @@ import {
   formEditProfile,
   formAddCard,
   selectors,
-} from "../utils/constants.js";
-import { Card } from "../components/Card.js";
-import { initialCards } from "../utils/cards.js";
-import { Section } from "../components/Section.js";
-import { FormValidator } from "../components/FormValidator.js";
-import PopupWithImage from "../components/PopupWithImage.js";
-import UserInfo from "../components/UserInfo.js";
-import PopupWithForm from "../components/PopupWithForm.js";
+} from "../../utils/constants.js";
+import { Card } from "../../components/Card.js";
+import { initialCards } from "../../utils/cards.js";
+import { Section } from "../../components/Section.js";
+import { FormValidator } from "../../components/FormValidator.js";
+import PopupWithImage from "../../components/PopupWithImage.js";
+import UserInfo from "../../components/UserInfo.js";
+import PopupWithForm from "../../components/PopupWithForm.js";
 
 const popupWithImage = new PopupWithImage(".popup_place_show-card");
 
