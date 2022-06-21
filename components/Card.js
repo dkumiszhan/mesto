@@ -16,20 +16,20 @@ export class Card {
   }
 
   getId() {
-    console.log(this._data._id);
+    //console.log(this._data._id);
     return this._data._id;
   }
 
   _isLikedByMe() {
-    console.log(this._data.likes);
+    //console.log(this._data.likes);
     return this._data.likes.findIndex((like) => like._id == this._userId) != -1;
   }
 
   _updateLikeState(likes) {
-    console.log(likes);
-    console.log(
-      this._data.likes.findIndex((like) => like._id == this._userId) != -1
-    );
+    //console.log(likes);
+    // console.log(
+    //   this._data.likes.findIndex((like) => like._id == this._userId) != -1
+    // );
     this._data.likes = likes;
     if (this._isLikedByMe()) {
       this._likeButton.classList.add("elements__list-button_active");
@@ -65,7 +65,8 @@ export class Card {
 
     this._updateLikeState(this._data.likes);
 
-    if (this._data.owner.id !== this._userId) {
+    if (this._data.owner._id !== this._userId) {
+      //console.log("card owner not me");
       this._removeButton.classList.add("elements__remove_hidden");
     }
 

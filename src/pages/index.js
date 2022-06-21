@@ -7,7 +7,9 @@ import {
   buttonAdd,
   formEditProfile,
   formAddCard,
+  formEditAvatar,
   selectors,
+  editAvatarButton,
 } from "../../utils/constants.js";
 import { Card } from "../../components/Card.js";
 import { initialCards } from "../../utils/cards.js";
@@ -20,6 +22,18 @@ import Api from "../../components/Api.js";
 import PopupWithSubmit from "../../components/PopupWithSubmit.js";
 
 const popupWithImage = new PopupWithImage(".popup_place_show-card");
+
+function editAvatarHandler(data) {
+  //console.log("edit avatar here");
+  return api
+    .updateAvatar(data)
+    .then((res) => updateAvatarNode(res.avatar))
+    .catch((err) => console.log(err));
+}
+
+function updateAvatarNode(link) {
+  document.querySelector(".profile .profile__avatar").src = link;
+}
 
 const api = new Api(
   "https://mesto.nomoreparties.co/v1/cohort-43/cards",
@@ -79,11 +93,23 @@ api
   });
 */
 
+const popupEditAvatar = new PopupWithForm(".popup_place_edit-avatar", (res) =>
+  editAvatarHandler(res)
+);
+
 api
   .getUserInfo()
   .then((res) => {
-    console.log(res);
+    //console.log(res);
     userId = res._id;
+    updateAvatarNode(res.avatar);
+    updateUserInfoNode(res.name, res.about);
+    // const popupEditAvatar = new PopupWithForm(
+    //   ".popup_place_edit-avatar",
+    //   (res) => {
+    //     editAvatarHandler(res);
+    //   }
+    // );
   })
   .then(() => api.getInitialCards())
   .then((cards) => {
@@ -147,7 +173,7 @@ function likeCardHandler(cardId, isLike) {
     });
   } else {
     return api.deleteLike(cardId).then((res) => {
-      console.log("like removed");
+      //console.log("like removed");
       return res.likes;
     });
   }
@@ -156,12 +182,15 @@ function likeCardHandler(cardId, isLike) {
 const userInfo = new UserInfo(".profile__name", ".profile__description");
 
 buttonPen.addEventListener("click", function () {
-  const { name, description } = userInfo.getUserInfo();
-  inputName.value = name;
-  inputDescription.value = description;
-
-  profileValidation.resetValidation();
   popupWithFormEdit.open();
+  profileValidation.resetValidation();
+
+  //what was before
+  // const { name, description } = userInfo.getUserInfo();
+  // inputName.value = name;
+  // inputDescription.value = description;
+  // profileValidation.resetValidation();
+  // popupWithFormEdit.open();
 });
 
 buttonAdd.addEventListener("click", function () {
@@ -169,8 +198,27 @@ buttonAdd.addEventListener("click", function () {
   popupWithFormAdd.open();
 });
 
+editAvatarButton.addEventListener("click", function () {
+  popupEditAvatar.open();
+});
+
+function updateUserInfoNode(name, about) {
+  userInfo.setUserInfo(name, about);
+}
+
 function callbackEdit(data) {
-  userInfo.setUserInfo(data["name-input"], data["description-input"]);
+  return api
+    .updateUserInfo({
+      name: data["name-input"],
+      about: data["description-input"],
+    })
+    .then((res) => {
+      //console.log(res.name, res.about);
+      return updateUserInfoNode(res.name, res.about);
+    })
+    .catch((err) => console.log(err));
+  //what was before
+  //userInfo.setUserInfo(data["name-input"], data["description-input"]);
 }
 
 const popupWithFormEdit = new PopupWithForm(
@@ -182,15 +230,18 @@ const popupWithFormEdit = new PopupWithForm(
 //   cardsSection.addItem(data);
 // });
 
-const popupWithFormAdd = new PopupWithForm(".popup_place_add-card", (data) => {
-  api.addCard(data).then((data) => cardsSection.addItem(data));
-});
+const popupWithFormAdd = new PopupWithForm(".popup_place_add-card", (data) =>
+  api.addCard(data).then((data) => cardsSection.addItem(data))
+);
 
 popupWithFormEdit.setEventListeners();
 popupWithFormAdd.setEventListeners();
 popupWithImage.setEventListeners();
+popupEditAvatar.setEventListeners();
 
 const profileValidation = new FormValidator(selectors, formEditProfile);
 const newCardValidation = new FormValidator(selectors, formAddCard);
+const avatarValidation = new FormValidator(selectors, formEditAvatar);
 profileValidation.enableValidation();
 newCardValidation.enableValidation();
+avatarValidation.enableValidation();

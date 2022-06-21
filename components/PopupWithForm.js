@@ -5,6 +5,11 @@ export default class PopupWithForm extends Popup {
     super(popupSelector);
     this._callbackOnSubmit = callbackOnSubmit;
     this._inputList = this._popup.querySelectorAll(".popup__input");
+    this._form = this._popup.querySelector(".popup__inputs");
+    this._inprogressButton = this._popup.querySelector(
+      ".popup__button-inprogress"
+    );
+    this._buttonSave = this._popup.querySelector(".popup__button-save");
   }
 
   _getInputValues() {
@@ -15,15 +20,31 @@ export default class PopupWithForm extends Popup {
     return data;
   }
 
+  successCallback() {
+    this._inprogressButton.classList.add("popup__button-inprogress_enabled");
+    this._buttonSave.classList.add("popup__button-save_type_hidden");
+  }
+
+  failureCallback() {
+    console.log("error");
+  }
+
   setEventListeners() {
-    this._form = this._popup.querySelector(".popup__inputs");
+    super.setEventListeners();
+
     this._form.addEventListener("submit", (evt) => {
       evt.preventDefault();
-      this._callbackOnSubmit(this._getInputValues());
+      this._inprogressButton.classList.add("popup__button-inprogress_enabled");
+      this._buttonSave.classList.add("popup__button-save_type_hidden");
+
+      this._callbackOnSubmit(this._getInputValues()).then((res) => {
+        this._inprogressButton.classList.remove(
+          "popup__button-inprogress_enabled"
+        );
+        this._buttonSave.classList.remove("popup__button-save_type_hidden");
+      });
       this.close();
     });
-
-    super.setEventListeners();
   }
 
   close() {

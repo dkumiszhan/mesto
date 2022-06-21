@@ -34,7 +34,7 @@ export default class Api {
   }
 
   deleteCard(cardId) {
-    console.log(cardId);
+    //console.log(cardId);
     return fetch(`${this._url}/${cardId}`, {
       headers: this._headers,
       method: "DELETE",
@@ -59,7 +59,7 @@ export default class Api {
   }
 
   updateUserInfo(data) {
-    fetch("https://mesto.nomoreparties.co/v1/cohort-43/users/me", {
+    return fetch("https://mesto.nomoreparties.co/v1/cohort-43/users/me", {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
@@ -102,6 +102,24 @@ export default class Api {
       method: "DELETE",
       //body: JSON.stringify(data),
     }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка ${res.status}`);
+    });
+  }
+
+  updateAvatar(data) {
+    return fetch(
+      "https://mesto.nomoreparties.co/v1/cohort-43/users/me/avatar",
+      {
+        method: "PATCH",
+        headers: this._headers,
+        body: JSON.stringify({
+          avatar: data.avatarLink,
+        }),
+      }
+    ).then((res) => {
       if (res.ok) {
         return res.json();
       }

@@ -46,6 +46,8 @@
             <input id="description-input" class="popup__input popup__input-edit popup__input_type_description" type="text" name="description" placeholder="О себе" minlength="2" maxlength="200" required>
             <span class="description-input-error popup__error"></span>
             <input class="popup__button-edit popup__button-save" type="submit" value="Сохранить">
+            <input class="popup__button-inprogress" type="submit" value="Сохранение..." disabled>
+
           </fieldset>
           
         </form>
@@ -63,6 +65,8 @@
             <input required id="link" class="popup__input popup__input-add popup__input_type_link" type="url" name="link" placeholder="Ссылка на картинку">
             <span class="link-error popup__error"></span>
             <input class="popup__button-save popup__button-add" type="submit" value="Создать">
+            <input class="popup__button-inprogress" type="submit" value="Сохранение..." disabled>
+
           </fieldset>
         </form>
       </div>         
@@ -75,9 +79,10 @@
         <h2 class="popup__title">Обновить аватар</h2>
         <form class="popup__inputs popup__inputs_type_edit-avatar" name="popup-form" novalidate>
           <fieldset class="popup__fieldset">
-            <input required id="link" class="popup__input popup__input-edit-avatar popup__input_type_link" type="url" name="link" placeholder="Ссылка на картинку">
-            <span class="link-error popup__error"></span>
+            <input required id="avatarLink" class="popup__input popup__input-edit-avatar popup__input_type_link" type="url" name="avatarLink" placeholder="Ссылка на картинку">
+            <span class="avatarLink-error popup__error"></span>
             <input class="popup__button-save popup__button-avatar" type="submit" value="Сохранить">
+            <input class="popup__button-inprogress" type="submit" value="Сохранение..." disabled>
           </fieldset>
         </form>
       </div>         
