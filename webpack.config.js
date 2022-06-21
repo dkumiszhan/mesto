@@ -20,6 +20,8 @@ module.exports = {
     open: true, // сайт будет открываться сам при запуске npm run dev
   },
   module: {
+    devtool: "source-map",
+
     rules: [
       // rules — это массив правил
       // добавим в него объект правил для бабеля

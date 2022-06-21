@@ -7,6 +7,9 @@ const buttonAdd = document.querySelector(".profile__button-add");
 const cardsContainer = document.querySelector(".elements__list");
 const formEditProfile = document.querySelector(".popup__inputs_type_edit");
 const formAddCard = document.querySelector(".popup__inputs_type_add");
+const formEditAvatar = document.querySelector(
+  ".popup__inputs_type_edit-avatar"
+);
 const selectors = {
   inputSelector: ".popup__input",
   submitButtonSelector: ".popup__button-save",
@@ -14,6 +17,7 @@ const selectors = {
   inputErrorClass: "popup__input_type_error",
   errorClass: "popup__error_visible",
 };
+const editAvatarButton = document.querySelector(".profile__button-avatar");
 
 export {
   inputName,
@@ -23,5 +27,7 @@ export {
   cardsContainer,
   formEditProfile,
   formAddCard,
+  formEditAvatar,
   selectors,
+  editAvatarButton,
 };
