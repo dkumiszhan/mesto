@@ -112,7 +112,7 @@ function deletePopupSubmitHandler(card) {
 }
 
 function deleteCardHandler(card) {
-  const popupWithSubmit = new PopupWithSubmit(".popup__confirm", () =>
+  const popupWithSubmit = new PopupWithSubmit(".popup_place_confirm", () =>
     deletePopupSubmitHandler(card)
   );
   popupWithSubmit.open();
