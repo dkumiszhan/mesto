@@ -2,16 +2,18 @@
     background-color: #000000;
     box-sizing: border-box;
     border: 1px solid #000;
-    opacity: 1;
-    transition: opacity 0.8s linear;
+    /* opacity: 1;
+    transition: opacity 0.8s linear; */
 }
 
 .profile__button-avatar:hover {
-    background-image: url('../../../images/pen.svg');
-    opacity: 0.6;
+
+    /* background-image: url('../../../images/pen.svg'); */
+
+    /* opacity: 0.6;
     transition: opacity 0.8s linear;
-    cursor: pointer;
-    background-repeat: no-repeat;
+    cursor: pointer; */
+    /* background-repeat: no-repeat;
     background-position: center;
-    background-size: 26px 26px;
+    background-size: 26px 26px; */
 }

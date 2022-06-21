@@ -32,7 +32,10 @@ function editAvatarHandler(data) {
 }
 
 function updateAvatarNode(link) {
-  document.querySelector(".profile .profile__avatar").src = link;
+  // document.querySelector(".profile .profile__avatar").src = link;
+  document.querySelector(
+    ".profile__avatar-container"
+  ).style.backgroundImage = `url(${link})`;
 }
 
 const api = new Api(
@@ -72,27 +75,6 @@ const cardsSection = new Section(
 );
 cardsSection.renderItems();
 
-/*
-api
-  .getInitialCards()
-  .then((cards) => {
-    cards
-      .slice()
-      .reverse()
-      .forEach((card) => {
-        cardsSection.addItem(card);
-        if (card.owner._id !== myId) {
-          cardsSection._container
-            .querySelector(".elements__remove")
-            .classList.add("elements__remove_hidden");
-        }
-      });
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-*/
-
 const popupEditAvatar = new PopupWithForm(".popup_place_edit-avatar", (res) =>
   editAvatarHandler(res)
 );
@@ -104,12 +86,6 @@ api
     userId = res._id;
     updateAvatarNode(res.avatar);
     updateUserInfoNode(res.name, res.about);
-    // const popupEditAvatar = new PopupWithForm(
-    //   ".popup_place_edit-avatar",
-    //   (res) => {
-    //     editAvatarHandler(res);
-    //   }
-    // );
   })
   .then(() => api.getInitialCards())
   .then((cards) => {
@@ -117,31 +93,10 @@ api
       .slice()
       .reverse()
       .forEach((card) => {
-        //
         cardsSection.addItem(card);
-        /*
-        if (card.owner._id !== results[1]) {
-          cardsSection._container
-            .querySelector(".elements__remove")
-            .classList.add("elements__remove_hidden");
-        }
-        let likesCount = card.likes.length;
-        cardsSection._container.querySelector(
-          ".elements__like-count"
-        ).textContent = likesCount;
-        */
       });
   })
   .catch((err) => console.log(err));
-
-// api
-//   .updateUserInfo()
-//   .then((res) => {
-//     console.log(`result of updateUserInfo ${res}`);
-//   })
-//   .catch((err) => {
-//     console.log(`Error of udateUserInfo ${err}`);
-//   });
 
 function callbackOnDelete() {
   //card.removeCard();
@@ -225,10 +180,6 @@ const popupWithFormEdit = new PopupWithForm(
   ".popup_place_profile",
   callbackEdit
 );
-
-// const popupWithFormAdd = new PopupWithForm(".popup_place_add-card", (data) => {
-//   cardsSection.addItem(data);
-// });
 
 const popupWithFormAdd = new PopupWithForm(".popup_place_add-card", (data) =>
   api.addCard(data).then((data) => cardsSection.addItem(data))
