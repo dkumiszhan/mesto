@@ -2,7 +2,14 @@ import { data } from "autoprefixer";
 
 export class Card {
   constructor(
-    { data, userId, handleCardClick, handleRemoveCard, handleLikeClick },
+    {
+      data,
+      isLikedByMe,
+      isOwnedByMe,
+      handleCardClick,
+      handleRemoveCard,
+      handleLikeClick,
+    },
     templateSelector
   ) {
     this._imageLink = data.link;
@@ -12,7 +19,8 @@ export class Card {
     this._handleRemoveCard = handleRemoveCard;
     this._handleLikeClick = handleLikeClick;
     this._data = data;
-    this._userId = userId;
+    this._isLikedByMe = isLikedByMe;
+    this._isOwnedByMe = isOwnedByMe;
   }
 
   getId() {
@@ -20,24 +28,27 @@ export class Card {
     return this._data._id;
   }
 
-  _isLikedByMe() {
+  isLikedByMe() {
     //console.log(this._data.likes);
-    return this._data.likes.findIndex((like) => like._id == this._userId) != -1;
+    // return this._data.likes.findIndex((like) => like._id == this._userId) != -1;
+    return this._isLikedByMe;
   }
 
-  _updateLikeState(likes) {
-    //console.log(likes);
-    // console.log(
-    //   this._data.likes.findIndex((like) => like._id == this._userId) != -1
-    // );
-    this._data.likes = likes;
-    if (this._isLikedByMe()) {
+  _updateLikesView() {
+    if (this.isLikedByMe()) {
       this._likeButton.classList.add("elements__list-button_active");
     } else {
       this._likeButton.classList.remove("elements__list-button_active");
     }
 
-    this._likeCount.textContent = likes.length;
+    this._likeCount.textContent = this._data.likes.length;
+  }
+
+  updateLikesState(likes, isLikedByMe) {
+    this._data.likes = likes;
+    this._isLikedByMe = isLikedByMe;
+
+    this._updateLikesView();
   }
 
   _getTemplate() {
@@ -63,9 +74,9 @@ export class Card {
     this._cardImage.src = this._imageLink;
     this._cardImage.alt = this._imageTitle;
 
-    this._updateLikeState(this._data.likes);
+    this._updateLikesView();
 
-    if (this._data.owner._id !== this._userId) {
+    if (!this._isOwnedByMe) {
       //console.log("card owner not me");
       this._removeButton.classList.add("elements__remove_hidden");
     }
@@ -83,36 +94,26 @@ export class Card {
     this._element = null;
   }
 
-  _handleLikeCount(count, enabled) {
-    this._likeCount = this._element.querySelector(".elements__like-count");
-    this._likeCount.textContent = count;
-    if (enabled) {
-      this._likeButton.classList.add("elements__list-button_active");
-    } else {
-      this._likeButton.classList.remove("elements__list-button_active");
-    }
-  }
+  // _handleLikeCount(count, enabled) {
+  //   this._likeCount = this._element.querySelector(".elements__like-count");
+  //   // this._likeCount.textContent = count;
+  //   // if (enabled) {
+  //   //   this._likeButton.classList.add("elements__list-button_active");
+  //   // } else {
+  //   //   this._likeButton.classList.remove("elements__list-button_active");
+  //   // }
+  //   this._updateLikesView(count);
+  // }
 
   _setEventListeners() {
     this._removeButton.addEventListener("click", () => {
       this._handleRemoveCard(this);
     });
 
-    this._likeButton.addEventListener("click", () => {
-      this._handleLikeClick(this._data._id, !this._isLikedByMe()).then(
-        (likes) => this._updateLikeState(likes)
-      );
-    });
-    /*
-      if (this._likeButton.classList.contains("elements__list-button_active")) {
-        this._handleLikeClick(this);
-      } else {
-        //something maybe
-      }
+    this._likeButton.addEventListener("click", () =>
+      this._handleLikeClick(this)
+    );
 
-      // this._handleLikeCount(likeCount);
-    });
-    */
     this._cardImage.addEventListener("click", () => {
       this._handleCardClick();
     });

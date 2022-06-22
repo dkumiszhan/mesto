@@ -70,8 +70,8 @@ export class FormValidator {
       });
     });
 
-    this._form.addEventListener("submit", (evt) => {
-      this._handleFormSubmit(evt);
-    });
+    // this._form.addEventListener("submit", (evt) => {
+    //   this._handleFormSubmit(evt);
+    // });
   }
 }

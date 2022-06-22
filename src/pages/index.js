@@ -23,25 +23,32 @@ import PopupWithSubmit from "../../components/PopupWithSubmit.js";
 
 const popupWithImage = new PopupWithImage(".popup_place_show-card");
 
-function editAvatarHandler(data) {
-  //console.log("edit avatar here");
+function editAvatarHandler(popup, formData) {
+  popup.setInProgress(true);
   return api
-    .updateAvatar(data)
-    .then((res) => updateAvatarNode(res.avatar))
+    .updateAvatar(formData)
+    .then((res) => {
+      userInfo.updateAvatarNode(res.avatar);
+      popup.close();
+    })
+    .finally(() => popup.setInProgress(false))
     .catch((err) => console.log(err));
 }
 
-function updateAvatarNode(link) {
-  // document.querySelector(".profile .profile__avatar").src = link;
-  document.querySelector(
-    ".profile__avatar-container"
-  ).style.backgroundImage = `url(${link})`;
-}
+// function updateAvatarNode(link) {
+//   // document.querySelector(".profile .profile__avatar").src = link;
+//   document.querySelector(
+//     ".profile__avatar-container"
+//   ).style.backgroundImage = `url(${link})`;
+// }
 
-const api = new Api(
-  "https://mesto.nomoreparties.co/v1/cohort-43/cards",
-  "c1d97d50-899b-43cb-b95d-18fefc90a34b"
-);
+const api = new Api({
+  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-43",
+  headers: {
+    "Content-type": "application/json",
+    authorization: "c1d97d50-899b-43cb-b95d-18fefc90a34b",
+  },
+});
 
 let userId = undefined;
 
@@ -49,15 +56,16 @@ function createCard(data) {
   const card = new Card(
     {
       data: data,
-      userId: userId,
+      isLikedByMe: data.likes.findIndex((like) => like._id == userId) != -1,
+      isOwnedByMe: data.owner._id === userId,
       handleCardClick: () => {
         popupWithImage.open(data.link, data.name);
       },
       handleRemoveCard: (card) => {
         deleteCardHandler(card);
       },
-      handleLikeClick: (cardId, isLike) => {
-        return likeCardHandler(cardId, isLike);
+      handleLikeClick: (card) => {
+        return likeCardHandler(card);
       },
     },
     ".template-elements"
@@ -66,17 +74,12 @@ function createCard(data) {
   return card.generateCard();
 }
 
-const cardsSection = new Section(
-  {
-    items: [],
-    renderer: createCard,
-  },
-  ".elements__list"
-);
-cardsSection.renderItems();
+const cardsSection = new Section(createCard, ".elements__list");
+// cardsSection.renderItems();
 
-const popupEditAvatar = new PopupWithForm(".popup_place_edit-avatar", (res) =>
-  editAvatarHandler(res)
+const popupEditAvatar = new PopupWithForm(
+  ".popup_place_edit-avatar",
+  (popup, formData) => editAvatarHandler(popup, formData)
 );
 
 api
@@ -84,17 +87,16 @@ api
   .then((res) => {
     //console.log(res);
     userId = res._id;
-    updateAvatarNode(res.avatar);
+    userInfo.updateAvatarNode(res.avatar);
     updateUserInfoNode(res.name, res.about);
+    popupWithFormEdit.setInputValues({
+      "name-input": res.name,
+      "description-input": res.about,
+    });
   })
   .then(() => api.getInitialCards())
   .then((cards) => {
-    cards
-      .slice()
-      .reverse()
-      .forEach((card) => {
-        cardsSection.addItem(card);
-      });
+    cardsSection.renderItems(cards);
   })
   .catch((err) => console.log(err));
 
@@ -111,25 +113,22 @@ function deletePopupSubmitHandler(card) {
     .catch((err) => console.log(err));
 }
 
+const popupWithSubmit = new PopupWithSubmit(".popup_place_confirm", (card) =>
+  deletePopupSubmitHandler(card)
+);
+
 function deleteCardHandler(card) {
-  const popupWithSubmit = new PopupWithSubmit(".popup_place_confirm", () =>
-    deletePopupSubmitHandler(card)
-  );
-  popupWithSubmit.open();
-  popupWithSubmit.setEventListeners();
+  popupWithSubmit.open(card);
 }
 
-function likeCardHandler(cardId, isLike) {
-  if (isLike) {
-    return api.putLike(cardId).then((res) => {
-      //console.log(`${card.getLikes()} card liked by`);
-      //console.log(`this is result ${res}`);
-      return res.likes;
+function likeCardHandler(card) {
+  if (!card.isLikedByMe()) {
+    return api.putLike(card.getId()).then((res) => {
+      return card.updateLikesState(res.likes, true);
     });
   } else {
-    return api.deleteLike(cardId).then((res) => {
-      //console.log("like removed");
-      return res.likes;
+    return api.deleteLike(card.getId()).then((res) => {
+      return card.updateLikesState(res.likes, false);
     });
   }
 }
@@ -154,6 +153,8 @@ buttonAdd.addEventListener("click", function () {
 });
 
 editAvatarButton.addEventListener("click", function () {
+  avatarValidation.disableSubmitButton();
+
   popupEditAvatar.open();
 });
 
@@ -161,16 +162,18 @@ function updateUserInfoNode(name, about) {
   userInfo.setUserInfo(name, about);
 }
 
-function callbackEdit(data) {
+function callbackEdit(popup, formData) {
+  popup.setInProgress(true);
   return api
     .updateUserInfo({
-      name: data["name-input"],
-      about: data["description-input"],
+      name: formData["name-input"],
+      about: formData["description-input"],
     })
     .then((res) => {
-      //console.log(res.name, res.about);
-      return updateUserInfoNode(res.name, res.about);
+      updateUserInfoNode(res.name, res.about);
+      popup.close();
     })
+    .finally(() => popup.setInProgress(false))
     .catch((err) => console.log(err));
   //what was before
   //userInfo.setUserInfo(data["name-input"], data["description-input"]);
@@ -181,14 +184,26 @@ const popupWithFormEdit = new PopupWithForm(
   callbackEdit
 );
 
-const popupWithFormAdd = new PopupWithForm(".popup_place_add-card", (data) =>
-  api.addCard(data).then((data) => cardsSection.addItem(data))
+const popupWithFormAdd = new PopupWithForm(
+  ".popup_place_add-card",
+  (popup, formData) => {
+    popup.setInProgress(true);
+    api
+      .addCard(formData)
+      .then((data) => {
+        cardsSection.addItem(data);
+        popup.close();
+      })
+      .finally(() => popup.setInProgress(false))
+      .catch((err) => console.log(err));
+  }
 );
 
 popupWithFormEdit.setEventListeners();
 popupWithFormAdd.setEventListeners();
 popupWithImage.setEventListeners();
 popupEditAvatar.setEventListeners();
+popupWithSubmit.setEventListeners();
 
 const profileValidation = new FormValidator(selectors, formEditProfile);
 const newCardValidation = new FormValidator(selectors, formAddCard);

@@ -1,65 +1,60 @@
 export default class Api {
-  constructor(url, token) {
-    this._url = url;
-    this._token = token;
-    this._headers = {
-      "Content-type": "application/json",
-      authorization: this._token,
-    };
-    this._mainUrl = "https://mesto.nomoreparties.co/v1/cohort-43";
+  constructor(options) {
+    this._baseUrl = options.baseUrl;
+    this._headers = options.headers;
+
+    // this._headers = {
+    //   "Content-type": "application/json",
+    //   authorization: this._token,
+    // };
+  }
+
+  _getResponseData(res) {
+    if (!res.ok) {
+      return Promise.reject(`Ошибка: ${res.status}`);
+    }
+    return res.json();
   }
 
   getInitialCards() {
-    return fetch(this._url, {
+    return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
     }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка ${res.status}`);
+      return this._getResponseData(res);
     });
   }
 
   addCard(data) {
-    return fetch(this._url, {
+    return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
       method: "POST",
       body: JSON.stringify(data),
     }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка ${res.status}`);
+      return this._getResponseData(res);
     });
   }
 
   deleteCard(cardId) {
     //console.log(cardId);
-    return fetch(`${this._url}/${cardId}`, {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
       headers: this._headers,
       method: "DELETE",
     }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка ${res.status}`);
+      return this._getResponseData(res);
     });
   }
 
   getUserInfo() {
-    return fetch("https://mesto.nomoreparties.co/v1/cohort-43/users/me", {
+    return fetch(`${this._baseUrl}/users/me`, {
       method: "GET",
       headers: this._headers,
     }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка ${res.status}`);
+      return this._getResponseData(res);
     });
   }
 
   updateUserInfo(data) {
-    return fetch("https://mesto.nomoreparties.co/v1/cohort-43/users/me", {
+    return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
@@ -76,54 +71,40 @@ export default class Api {
       //     about: "Physicist and Chemist",
       //   }),
     }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка ${res.status}`);
+      return this._getResponseData(res);
     });
   }
 
   putLike(cardId) {
-    return fetch(`${this._mainUrl}/cards/${cardId}/likes`, {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       headers: this._headers,
       method: "PUT",
       //body: JSON.stringify(data),
     }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка ${res.status}`);
+      console.log(res);
+      return this._getResponseData(res);
     });
   }
 
   deleteLike(cardId) {
-    return fetch(`${this._mainUrl}/cards/${cardId}/likes`, {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       headers: this._headers,
       method: "DELETE",
       //body: JSON.stringify(data),
     }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка ${res.status}`);
+      return this._getResponseData(res);
     });
   }
 
   updateAvatar(data) {
-    return fetch(
-      "https://mesto.nomoreparties.co/v1/cohort-43/users/me/avatar",
-      {
-        method: "PATCH",
-        headers: this._headers,
-        body: JSON.stringify({
-          avatar: data.avatarLink,
-        }),
-      }
-    ).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка ${res.status}`);
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: data.avatarLink,
+      }),
+    }).then((res) => {
+      return this._getResponseData(res);
     });
   }
 }
