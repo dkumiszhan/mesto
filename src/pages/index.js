@@ -88,11 +88,11 @@ api
     //console.log(res);
     userId = res._id;
     userInfo.updateAvatarNode(res.avatar);
-    updateUserInfoNode(res.name, res.about);
-    popupWithFormEdit.setInputValues({
-      "name-input": res.name,
-      "description-input": res.about,
-    });
+    userInfo.setUserInfo(res.name, res.about);
+    // popupWithFormEdit.setInputValues({
+    //   "name-input": res.name,
+    //   "description-input": res.about,
+    // });
   })
   .then(() => api.getInitialCards())
   .then((cards) => {
@@ -123,19 +123,28 @@ function deleteCardHandler(card) {
 
 function likeCardHandler(card) {
   if (!card.isLikedByMe()) {
-    return api.putLike(card.getId()).then((res) => {
-      return card.updateLikesState(res.likes, true);
-    });
+    return api
+      .putLike(card.getId())
+      .then((res) => {
+        return card.updateLikesState(res.likes, true);
+      })
+      .catch((err) => console.log(err));
   } else {
-    return api.deleteLike(card.getId()).then((res) => {
-      return card.updateLikesState(res.likes, false);
-    });
+    return api
+      .deleteLike(card.getId())
+      .then((res) => {
+        return card.updateLikesState(res.likes, false);
+      })
+      .catch((err) => console.log(err));
   }
 }
 
 const userInfo = new UserInfo(".profile__name", ".profile__description");
 
 buttonPen.addEventListener("click", function () {
+  const { name, description } = userInfo.getUserInfo();
+  inputName.value = name;
+  inputDescription.value = description;
   popupWithFormEdit.open();
   profileValidation.resetValidation();
 
@@ -158,10 +167,6 @@ editAvatarButton.addEventListener("click", function () {
   popupEditAvatar.open();
 });
 
-function updateUserInfoNode(name, about) {
-  userInfo.setUserInfo(name, about);
-}
-
 function callbackEdit(popup, formData) {
   popup.setInProgress(true);
   return api
@@ -170,7 +175,7 @@ function callbackEdit(popup, formData) {
       about: formData["description-input"],
     })
     .then((res) => {
-      updateUserInfoNode(res.name, res.about);
+      userInfo.setUserInfo(res.name, res.about);
       popup.close();
     })
     .finally(() => popup.setInProgress(false))
